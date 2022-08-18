@@ -25,9 +25,8 @@
 /**********************************************************************************************************************
  *  GLOBAL FUNCTION MACROS
  *********************************************************************************************************************/
-#define GET_PRIOTITY_VAL(Group_Pri,SupPri) (uint32)((Group_Pri<<SUB_PRIORITY_BITS)|SupPri)
-#define ASSIGN_PRIORITY(IRQ_ID,Group_Pri,SupPri)\
-	MY_INTCTRL->PRI[IRQ_ID/4] = GET_PRIOTITY_VAL(Group_Pri,SupPri)<<((IRQ_ID%4)*8+5)
+#define GET_PRIOTITY_VAL(Group_Pri,SupPri) ((Group_Pri<<SUB_PRIORITY_BITS)|SupPri)
+#define ASSIGN_PRIORITY(IRQ_ID,Group_Pri,SupPri) MY_INTCTRL->PRI[IRQ_ID/4] = GET_PRIOTITY_VAL(Group_Pri,SupPri)<<((IRQ_ID%4)*8+5)
 	
 
 /**********************************************************************************************************************

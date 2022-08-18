@@ -19,11 +19,11 @@
 /**********************************************************************************************************************
  *  GLOBAL CONSTANT MACROS
  *********************************************************************************************************************/
-#define INTERRUPT_VECTOR_ADD_OFFSET ((volatile uint32*)0x00000040)
+#define INTERRUPT_VECTOR_ADD_OFFSET ((volu32)0x00000040)
 /**********************************************************************************************************************
  *  GLOBAL FUNCTION MACROS
  *********************************************************************************************************************/
-#define GET_IRQ_VECTOR_ADD(IRQ_ID) (INTERRUPT_VECTOR_ADD_OFFSET + (volatile uint32*)(4 * IRQ_ID))
+#define GET_IRQ_VECTOR_ADD(IRQ_ID) (INTERRUPT_VECTOR_ADD_OFFSET + (volu32)(4 * IRQ_ID))
 /**********************************************************************************************************************
  *  GLOBAL DATA TYPES AND STRUCTURES
  *********************************************************************************************************************/
@@ -114,11 +114,11 @@ PWM1_1_IRQ_ID,            // 135: PWM 1 Generator 1
 PWM1_2_IRQ_ID,            // 136: PWM 1 Generator 2
 PWM1_3_IRQ_ID,            // 137: PWM 1 Generator 3
 PWM1_FAULT_IRQ_ID         // 138: PWM 1 Fault
-}IntCtrl_InterruptID;
+}IntCtrl_InterruptType;
 
 typedef struct
 {
-  IntCtrl_InterruptID IRQid;
+  uint8 u8IRQid;
   uint8 u8GroupPriority;
   uint8 u8supPriority;
 } ExPriphIRQ_type;

@@ -25,8 +25,11 @@
 /**********************************************************************************************************************
  *  GLOBAL DATA
  *********************************************************************************************************************/
-
-
+ 
+/*
+I can implement here a function to init all peripheral periorities, if run time assignment is disabled
+this function is only called with intCtrl initialization function*
+*/
 
 /**********************************************************************************************************************
  *  END OF FILE: IntCtrl_Lcfg.c

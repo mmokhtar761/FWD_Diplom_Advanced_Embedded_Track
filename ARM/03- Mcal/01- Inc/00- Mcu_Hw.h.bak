@@ -2,60 +2,60 @@
 
  *  FILE DESCRIPTION
  *  -------------------------------------------------------------------------------------------------------------------
- *         File:  IntCtrl_Cfg.h
- *       Module:  -
+ *         File:  Mcu_Hw.h
+ *       Module:  Mcu_Hw
  *
- *  Description:  <Write File DESCRIPTION here>     
+ *  Description:  header file for Registers definition    
  *  
  *********************************************************************************************************************/
-#ifndef INTCTRL_CFG_H
-#define INTCTRL_CFG_H
+#ifndef MCU_HW_H
+#define MCU_HW_H
 
 /**********************************************************************************************************************
  * INCLUDES
  *********************************************************************************************************************/
-
-/**********************************************************************************************************************
- *  GLOBAL CINFIG MACROS
- *********************************************************************************************************************/
-/*
-  >Priority is described by 3 bits in CORTEX-M4
-  >Num of Priorty levels increases as bits increases
-  >Ex: n bits give 2power(n) levels
-*/
-#define GROUP_PRIORITY_BITS 2
-#define SUB_PRIORITY_BITS   1
-
-/*
-  >ENABLE : Enables priority assigning functions
-  >DISALE : Priority is assigned acording to configured priorities when NVIC is initialized
-*/
-#define EDIT_PRIORITY_RUN_TIME ENABLE
-#if EDIT_PRIORITY_RUN_TIME == DISABLE
-//Please, fill this section with needed interrupts periorities to be called in initialization
-//Please, be aware for for bits choosen for sup/group periorities
-
-	#define PRIORITY_INIT_CODE \
-	ASSIGN_PRIORITY(GPIOA_IRQ_ID,Group_Pri,SupPri);\
-	ASSIGN_PRIORITY(TIMER0B_IRQ_ID,Group_Pri,SupPri)
-	
-	//#define PRIORITY_INIT_CODE ASSIGN_PRIORITY(GPIOA_IRQ_ID,Group_Pri,SupPri);ASSIGN_PRIORITY(TIMER0B_IRQ_ID,Group_Pri,SupPri)
-	
-	
-#endif
-/**********************************************************************************************************************
- *  GLOBAL FUNCTION MACROS
- *********************************************************************************************************************/
-
+#include "Std_Types.h"
 
 /**********************************************************************************************************************
  *  GLOBAL DATA TYPES AND STRUCTURES
  *********************************************************************************************************************/
+typedef struct
+{
+  volatile uint32 INTCTRL_ISER[5]; //IRQ set-enable registers ID 0-138
+  uint2   RESERVED0[27];
+  volatile uint32 INTCTRL_ICER[5]; //IRQ clear-enable registers ID 0-63
+  uint2   RESERVED1[27];
+  volatile uint32 INTCTRL_ISPR[5]; //IRQ set-pending registers ID 0-63
+  uint2   RESERVED2[27];
+  volatile uint32 INTCTRL_ICPR[5]; //IRQ clear-pending registers ID 0-63
+  uint2   RESERVED3[27];
+  volatile uint32 INTCTRL_IABR[5]; //IRQ active bit registers ID 0-63
+  uint2   RESERVED4[62];
+  volatile uint32 INTCTRL_IPR[35]; //IRQ priority registers
+} INTCTRL_RegType;
+/**********************************************************************************************************************
+ *  GLOBAL CONSTANT MACROS
+ *********************************************************************************************************************/
+#define CORTEXM4_PERI_BASE_ADDRESS    ((volatile uint32)0xE000E000)
 
+#define SYS_TICK_ADDRESS_OFFSET       ((volatile uint32)0x00000010)
+#define INTCTRL_ADDRESS_OFFSET        ((volatile uint32)0x00000100)
 
- 
-#endif  /* INTCTRL_CFG_H */
+#define SYS_TICK_ADDRESS              (CORTEXM4_PERI_BASE_ADDRESS + SYS_TICK_ADDRESS_OFFSET)
+#define INTCTRL_ADDRESS               (CORTEXM4_PERI_BASE_ADDRESS + INTCTRL_ADDRESS_OFFSET)
+
+#define MY_SYS_TICK                   ((SYS_TICK_RegType*)SYS_TICK_ADDRESS)
+#define MY_INTCTRL                    ((INTCTRL_RegType *)INTCTRL_ADDRESS)
 
 /**********************************************************************************************************************
- *  END OF FILE: IntCtrl_Cfg.h
+ *  GLOBAL DATA PROTOTYPES
+ *********************************************************************************************************************/
+
+ 
+
+ 
+#endif  /* MCU_HW_H */
+
+/**********************************************************************************************************************
+ *  END OF FILE: Mcu_Hw.h
  *********************************************************************************************************************/

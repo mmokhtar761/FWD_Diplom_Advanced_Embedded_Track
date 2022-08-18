@@ -13,8 +13,8 @@
  *  INCLUDES
  *********************************************************************************************************************/
 #include "Std_Types.h"
-#include "00- Mcu_Hw.h"
-#include "IntCtrl.h"
+#include "Mcu_Hw.h"
+#include "IntCrtl.h"
 
 /**********************************************************************************************************************
 *  LOCAL MACROS CONSTANT\FUNCTION
@@ -51,30 +51,30 @@ void IntCrtl_voidinitIntCrtl (void)
     It is noted that :
        PRIGROUP value = sub-priority bits + 0x4
   */
-  MY_SCB->APINT= ((SUB_PRIORITY_BITS + 0x4 )|(SCB_ABINT_W_KEY<<8))<<8;
-  #if EDIT_PRIORITY_RUN_TIME == DISABLE
+  My_SCB->ABINT= ((SUB_PRIORITY_BITS + 0x4 )|(SCB_ABINT_W_KEY<<8))<<8;
+  #if EDIT_PRIORITY_RUN_TIME == ENABLE
   //This section is added only if periority assignment is a prebuild configuration
 	PRIORITY_INIT_CODE;
   #endif
 
 }
 /*
-   DISABLE : disables all external peripherals IRQs
-   ENABLE  : restores all last en/disable configurations to external peripherals IRQs
+   DIS : disables all external peripherals IRQs
+   EN  : restores all last en/disable configurations to external peripherals IRQs
 */
-void IntCrtl_voidEnDisExternalPeripheralIRQ(uint8 Copy_u8ENorDIS)
+void IntCrtl_voidEnDisExternalPeripheralIRQ(uint8 Copy_uint8ENorDIS)
 {
 	//This var should be init in startup code to prevent assigning garbage
-	static uint32 local_u32lastEnMask[5];
+	static u32 local_u32lastEnMask[5];
 	uint8 i;
-	if      (Copy_u8ENorDIS == ENABLE ){
+	if      (Copy_u8ENorDIS == EN ){
 		//assign the mask saved last time
 		for (i=0;i<5;i++) MY_INTCTRL->ENR[i] = local_u32lastEnMask[i];
-	}else if (Copy_u8ENorDIS == DISABLE ){
+	}else if (Copy_u8ENorDIS == DIS ){
 		//save the current mask
 		for (i=0;i<5;i++) local_u32lastEnMask[i] = MY_INTCTRL->ENR[i];
 		//disable all interrupts
-		for (i=0;i<5;i++) MY_INTCTRL->DISR[i] = 0xFFFFFFFF;
+		for (i=0;i<5;i++) MY_INTCTRL->DISR[i] = 0xFFFFFFFF;;
 	}
 }
 
@@ -88,7 +88,7 @@ void IntCrtl_voidEnDisExternalPeripheralIRQ(uint8 Copy_u8ENorDIS)
 */
 void IntCrtl_voidConfigIRQpriority (ExPriphIRQ_type * Ptr_ExPriphIRQ)
 {
-	ASSIGN_PRIORITY(Ptr_ExPriphIRQ->IRQid,Ptr_ExPriphIRQ->u8GroupPriority,Ptr_ExPriphIRQ->u8supPriority);
+	ASSIGN_PRIORITY(Ptr_ExPriphIRQ->u8IRQid,Ptr_ExPriphIRQ->u8GroupPriority,Ptr_ExPriphIRQ->u8supPriority);
 }
 #endif
 /*
@@ -154,7 +154,7 @@ uint32  IntCrtl_uint32GetActive (IntCtrl_InterruptID Copy_IRQ_ID)
 //{
 
 	/*TODO Configure Grouping\SubGrouping System in APINT register in SCB*/
-   // APINT = 0xFA05|0x00001234;
+    APINT = 0xFA05|0x00001234;
     
     /*TODO : Assign Group\Subgroup priority in NVIC_PRIx Nvic and SCB_SYSPRIx Registers*/  
 
