@@ -21,18 +21,18 @@
  *********************************************************************************************************************/
 typedef struct
 {
-  volatile uint32  ENR[5]; //IRQ set-enable registers ID 0-138
+  volatile uint32  ENR[5];        //IRQ set-enable registers ID 0-138
   uint32   RESERVED0[27];
-  volatile uint32 DISR[5]; //IRQ clear-enable registers ID 0-63
+  volatile uint32 DISR[5];        //IRQ clear-enable registers ID 0-63
   uint32   RESERVED1[27];
-  volatile uint32 PEND[5]; //IRQ set-pending registers ID 0-63
+  volatile uint32 PEND[5];        //IRQ set-pending registers ID 0-63
   uint32   RESERVED2[27];
-  volatile uint32 UNPEND[5]; //IRQ clear-pending registers ID 0-63
+  volatile uint32 UNPEND[5];      //IRQ clear-pending registers ID 0-63
   uint32   RESERVED3[27];
-  volatile uint32 ACTIVER[5]; //IRQ active bit registers ID 0-63
+  volatile uint32 ACTIVER[5];     //IRQ active bit registers ID 0-63
   uint32   RESERVED4[62];
-  volatile uint32 PRI[35]; //IRQ priority registers
-  volatile uint32 SWTRIG;  //Software Trigger Interrupt
+  volatile uint32 PRI[35];        //IRQ priority registers
+  volatile uint32 SWTRIG;         //Software Trigger Interrupt
 } INTCTRL_RegType;
 
 typedef struct
@@ -51,9 +51,66 @@ typedef struct
   volatile uint32 FAULTADDR;      //Bus Fault Address
 
 } SCB_RegType;
+
+typedef struct
+{
+  volatile uint32 DID0;            //Device Identification 0
+  volatile uint32 DID1;            //Device Identification 1
+  uint32   RESERVED1[11];       
+  volatile uint32 PBORCTL;         //Brown-Out Reset Control
+  uint32   RESERVED2[8];
+  volatile uint32 RIS;             //Raw Interrupt Status
+  volatile uint32 IMC;             //Interrupt Mask Control
+  volatile uint32 MISC;            //Masked Interrupt Status and Clear
+  volatile uint32 RESC;            //Reset Cause
+  volatile uint32 RCC;             //Run-Mode Clock Configuration
+  uint32   RESERVED3[2];
+  volatile uint32 GPIOHBCTL;       //GPIO High-Performance Bus Control
+  volatile uint32 RCC2;            //Run-Mode Clock Configuration 2
+  uint32   RESERVED4[2];
+  volatile uint32 MOSCCTL;         //Main Oscillator Control
+  uint32   RESERVED5[50];
+  volatile uint32 DSLPCLKCFG;      //Deep Sleep Clock Configuration
+  uint32   RESERVED6[1];
+  volatile uint32 SYSPROP;         //System Properties 
+  volatile uint32 PIOSCCAL;        //Precision Internal Oscillator Calibration
+  volatile uint32 PIOSCSTAT;       //Precision Internal Oscillator Statistics
+  uint32   RESERVED7[3];
+  volatile uint32 PLLFREQ0;        //PLL Frequency 0
+  volatile uint32 PLLFREQ1;        //PLL Frequency 1
+  volatile uint32 PLLSTAT;         //PLL Status
+  uint32   RESERVED8[8];
+  volatile uint32 SLPPWRCFG;       //Sleep Power Configuration
+  volatile uint32 DSLPPWRCFG;      //Deep-Sleep Power Configuration
+  uint32   RESERVED9[10];
+  volatile uint32 LDOSPCTL;        //LDO Sleep Power Control
+  volatile uint32 LDOSPCAL;        //LDO Sleep Power Calibration
+  volatile uint32 LDODPCTL;        //LDO Deep-Sleep Power Control
+  volatile uint32 LDODPCAL;        //LDO Deep-Sleep Power Calibration
+  uint32   RESERVED10[3];
+  volatile uint32 SDPMST;          //Sleep / Deep-Sleep Power Mode Status
+  uint32   RESERVED11[77];
+  volatile uint32 PrP[24];         //Peripheral Present IDs {4,9,11,12,18,19,20,21} ARE RESERVED  (RO) 
+  uint32   RESERVED12[105];
+  volatile uint32 SwR[24];          //Software Reset  IDs {4,9,11,12,18,19,20,21} ARE RESERVED
+  uint32   RESERVED13[41];
+  volatile uint32 R_ClkCtrl[24];    //Run Mode Clock Gating Control IDs {4,9,11,12,18,19,20,21} ARE RESERVED
+  uint32   RESERVED14[41];
+  volatile uint32 S_ClkCtrl[16];   //Sleep Mode Clock Gating Control
+  uint32   RESERVED15[41];
+  volatile uint32 DS_ClkCtrl[16];   //Deep-Sleep Mode Clock Gating Control
+  uint32   RESERVED16[105];
+  volatile uint32 PrRDY[16];        //Peripheral Ready (RO)
+  
+  /*System Control Legacy Registers*/
+ /* volatile uint32 DC[9];           //Device Capabilities (RO)
+  volatile uint32 SRCR[3];         //Software Reset Control (RO)
+  volatile uint32 RCGC1[3];        //Run Mode Clock Gating Control Register (RO)*/
+  } SysCtrl_RegType;
 /**********************************************************************************************************************
  *  GLOBAL CONSTANT MACROS
  *********************************************************************************************************************/
+ /*** Cortex M-4 peripheral's registers BaseAdd ***/
 #define CORTEXM4_PERI_BASE_ADDRESS    ((volatile uint32)0xE000E000)
 
 #define SYS_TICK_ADDRESS_OFFSET       ((volatile uint32)0x00000010)
@@ -67,14 +124,17 @@ typedef struct
 #define MY_SYS_TICK                   ((SYS_TICK_RegType*)SYS_TICK_ADDRESS)
 #define MY_INTCTRL                    ((INTCTRL_RegType *)INTCTRL_ADDRESS)
 #define MY_SCB                        ((SCB_RegType *)SCB_ADDRESS)
+/*** Vendor peripheral's registers BaseAdd ***/
+
+#define SCB_BASE_ADDRESS              ((volatile uint32)0x400FE000)
+
+#define MY_SYSCTRL                    ((SysCtrl_RegType *)SCB_BASE_ADDRESS)
 
 /**********************************************************************************************************************
  *  GLOBAL DATA PROTOTYPES
  *********************************************************************************************************************/
 #define SCB_ABINT_W_KEY 0x05FA
- 
 
- 
 #endif  /* MCU_HW_H */
 
 /**********************************************************************************************************************
