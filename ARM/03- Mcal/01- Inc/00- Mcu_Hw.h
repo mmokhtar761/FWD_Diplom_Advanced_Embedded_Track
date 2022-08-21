@@ -21,7 +21,13 @@
  *********************************************************************************************************************/
 typedef struct
 {
-  volatile uint32  ENR[5];        //IRQ set-enable registers ID 0-138
+	volatile uint32 STCTRL;      //SysTick Control and Status Register
+	volatile uint32 STRELOAD;    //SysTick Reload Value Register
+	volatile uint32 STCURRENT;   //SysTick Current Value Register
+} SYS_TICK_RegType;
+typedef struct
+{
+  volatile uint32 ENR[5];        //IRQ set-enable registers ID 0-138
   uint32   RESERVED0[26];
   volatile uint32 DISR[5];        //IRQ clear-enable registers ID 0-63
   uint32   RESERVED1[26];
@@ -49,7 +55,6 @@ typedef struct
   volatile uint32 HFAULTSTAT;     //Hard Fault Status
   volatile uint32 MMADDR;         //Memory Management Fault Address
   volatile uint32 FAULTADDR;      //Bus Fault Address
-
 } SCB_RegType;
 
 typedef struct
@@ -101,11 +106,6 @@ typedef struct
   volatile uint32 DS_ClkCtrl[16];   //Deep-Sleep Mode Clock Gating Control
   uint32   RESERVED16[104];
   volatile uint32 PrRDY[16];        //Peripheral Ready (RO)
-  
-  /*System Control Legacy Registers*/
- /* volatile uint32 DC[9];           //Device Capabilities (RO)
-  volatile uint32 SRCR[3];         //Software Reset Control (RO)
-  volatile uint32 RCGC1[3];        //Run Mode Clock Gating Control Register (RO)*/
 } SysCtrl_RegType;
   
   typedef struct
@@ -120,7 +120,7 @@ typedef struct
 	volatile uint32 GPIORIS;
 	volatile uint32 GPIOMIS;
 	volatile uint32 GPIOICR;
-	  uint32   RESERVED2[55];
+	uint32   RESERVED2[55];
     volatile uint32 GPIOAFSEL;
     volatile uint32 GPIODR[3];
     volatile uint32 GPIOODR;
@@ -152,7 +152,7 @@ typedef struct
  *  GLOBAL CONSTANT MACROS
  *********************************************************************************************************************/
  /*** Cortex M-4 peripheral's registers BaseAdd ***/
-#define CORTEXM4_PERI_BASE_ADDRESS    ((volatile uint32)0xE000E000)
+#define CORTEXM4_PERI_BASE_ADDRESS    ((volatile uint32)0xE000E000) 
 
 #define SYS_TICK_ADDRESS_OFFSET       ((volatile uint32)0x00000010)
 #define INTCTRL_ADDRESS_OFFSET        ((volatile uint32)0x00000100)
