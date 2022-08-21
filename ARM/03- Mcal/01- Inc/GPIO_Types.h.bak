@@ -36,7 +36,6 @@ PORTF_ID
 }GPIO_PortID_type;
 typedef enum
 {
-P0,
 P1,
 P2,
 P3,
@@ -82,8 +81,7 @@ typedef enum
 	PULL_UP,
 	PULL_DOWN
 } GPIO_PadPuPd_type;
-
-typedef struct 
+typedef struct
 {
 	GPIO_PortID_type    PinPort;
 	GPIO_PinIndex_type  PinIndex;
@@ -99,7 +97,6 @@ typedef enum
 	GPIO_PinL,
 	GPIO_PinH
 }GPIO_PinLvl_type;
-
 typedef enum
 {
 	GPIO_NibleL,

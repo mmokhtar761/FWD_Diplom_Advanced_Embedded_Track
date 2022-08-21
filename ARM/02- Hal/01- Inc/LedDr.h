@@ -14,7 +14,6 @@
 /**********************************************************************************************************************
  * INCLUDES
  *********************************************************************************************************************/
-#include "Std_Types.h"
 #include "LedDr_Types.h"
 #include "LedDr_Cfg.h"
 
@@ -48,7 +47,13 @@
 * \Parameters (out): None                                                      
 * \Return value:   : None
 *******************************************************************************/
-
+void LedDr_LedInit(void);
+void LedDrHigh (LedIndex_type LedIndex);
+void LedDrLow  (LedIndex_type LedIndex);
+void LedTog (LedIndex_type LedIndex);
+void LedFlasherAsyn (LedIndex_type LedIndex,uint8 OnTmSec,uint8 OffTmSec);
+void LedStopFlasherAsyn (LedIndex_type LedIndex);
+void sysTickNotfHandler (void);
 #endif  /* LED_DR_H */
 /**********************************************************************************************************************
  *  END OF FILE: LedDr.h

@@ -2,32 +2,29 @@
 
  *  FILE DESCRIPTION
  *  -------------------------------------------------------------------------------------------------------------------
- *         File:  SysTick.h
- *       Module:  SysTick
+ *         File:  LedDr.h
+ *       Module:  LedDr
  *
- *  Description:  header file for SysTick Module    
+ *  Description:  header file for LedDr Module    
  *  
  *********************************************************************************************************************/
-#ifndef SYS_TICK_H
-#define SYS_TICK_H
+#ifndef LED_DR_H
+#define LED_DR_H
 
 /**********************************************************************************************************************
  * INCLUDES
  *********************************************************************************************************************/
-#include "SysTick_Types.h"
-#include "SysTick_Cfg.h"
+#include "Std_Types.h"
+#include "LedDr_Types.h"
+#include "LedDr_Cfg.h"
 
 /**********************************************************************************************************************
- *  GLOBAL CONSTANT MACROS
+ *  GLOBAL CONSTANT MACROS 
  *********************************************************************************************************************/
-#define SYS_TICK_WIDTH   24
-#define SYS_TICK_MAX_VAL 0xFFFFFF
+
 /**********************************************************************************************************************
  *  GLOBAL FUNCTION MACROS
  *********************************************************************************************************************/
-
-	
-
 /**********************************************************************************************************************
  *  GLOBAL DATA TYPES AND STRUCTURES
  *********************************************************************************************************************/
@@ -41,27 +38,22 @@
 /**********************************************************************************************************************
  *  GLOBAL FUNCTION PROTOTYPES
  *********************************************************************************************************************/
- /******************************************************************************
-* \Syntax          :                                   
-* \Description     : initialize SysTick Timer parsing the Configuration into  registers 
-*                                                   
+/******************************************************************************
+* \Syntax          :                          
+* \Description     :                             
 *                                                                             
-* \Sync\Async      : Synchronous                                               
-* \Reentrancy      : Non Reentrant                                             
+* \Sync\Async      : Asynchronous                                               
+* \Reentrancy      : Reentrant                                             
 * \Parameters (in) : None                     
 * \Parameters (out): None                                                      
 * \Return value:   : None
 *******************************************************************************/
-void SysTickStartMultiShot (SysTickCount_type CopyRldVal);
-void SysTickStartOneShot   (SysTickCount_type CopyRldVal);
-void SysTickStop           (void);
-SysTickCount_type SysTick_CountGetElpsd  (void);
-SysTickCount_type SysTick_CountGetRemn   (void);
-void SysTickEnNotf         (void(*PtrCallBackFn)(void));
-void SysTickDisNotf        (void);
-void SysTick_Handler (void);
-#endif  /* SysTick_H */
+void LedDr_LedInit(LedIndex_type LedIndex);
+void LedDrHigh (LedIndex_type LedIndex);
+void LedDrLow  (LedIndex_type LedIndex);
+void LedTog (LedIndex_type LedIndex);
 
+#endif  /* LED_DR_H */
 /**********************************************************************************************************************
- *  END OF FILE: SysTick.h
+ *  END OF FILE: LedDr.h
  *********************************************************************************************************************/

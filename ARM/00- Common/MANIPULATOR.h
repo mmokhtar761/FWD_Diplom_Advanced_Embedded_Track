@@ -6,10 +6,10 @@
 #ifndef MANIPULATOR_H
 #define MANIPULATOR_H
                       /* dealing with only 1 Bit */
-#define MAN_BIT(VAR,BIT,_1BIT_VAL)                VAR=((VAR & ~(1<<BIT))|(_1BIT_VAL<<BIT))
-#define BIT_H(VAR,BIT)                            VAR|=  (1<<BIT)
-#define BIT_L(VAR,BIT)                            VAR&= ~(1<<BIT)
-#define GET_BIT(VAR,BIT)                          ((VAR>>BIT)&1)
+#define MAN_BIT(VAR,BIT,_1BIT_VAL)                VAR=((VAR & ~((uint32)1<<BIT))|((uint32)_1BIT_VAL<<BIT))
+#define BIT_H(VAR,BIT)                            VAR|=  ((uint32)1<<BIT)
+#define BIT_L(VAR,BIT)                            VAR&= ~((uint32)1<<BIT)
+#define GET_BIT(VAR,BIT)                          ((VAR>>BIT)&(uint32)1)
 //#define TOG_BIT(VAR,BIT)                          VAR^=  (1<<BIT)
 /*Bit banding regions and alies boarders*/
 //SRAM
@@ -47,7 +47,7 @@ bit_number
 	The bit position, 0-7, of the targeted bit
 */
                      /* dealing with nibble (4 Bit) */
-#define MAN_NIBBLE(VAR,START_BIT,_4BIT_VAL)        VAR=((VAR & ~(0xF<<START_BIT))|(_4BIT_VAL<<START_BIT))
+#define MAN_NIBBLE(VAR,START_BIT,_4BIT_VAL)        VAR=((VAR & ~((uint32)0xF<<START_BIT))|(_4BIT_VAL<<START_BIT))
 #define SET_NIBBLE(VAR,START_BIT)                  VAR|=  (0xF<<START_BIT)
 #define CLR_NIBBLE(VAR,START_BIT)                  VAR&= ~(0xF<<START_BIT)
 #define GET_NIBBLE(VAR,START_BIT)                  ((VAR&(0XF<<START_BIT))>>START_BIT)
