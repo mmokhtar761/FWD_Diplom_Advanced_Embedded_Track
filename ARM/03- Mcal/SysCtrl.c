@@ -52,14 +52,13 @@
 *******************************************************************************/
 void SysCtrl_VoidInit(void)
 {
-	SysCtrl_PeripheralID_Type x =SysCtrl_PWM;
-	SysCtrl_EnPeripheralClk(x);
+	
 	/*selecting oscilator source*/
-	MY_SYSCTRL->RCC = (MY_SYSCTRL->RCC&(~0b11<<4))    | (PRIM_CLK_SOURCE<<4);
+	MY_SYSCTRL->RCC = (MY_SYSCTRL->RCC&((uint32)~0x3<<4))    | (PRIM_CLK_SOURCE<<4);
 	
 	#if     PRIM_CLK_SOURCE == PIOSC || PRIM_CLK_SOURCE == PIOSC_DIV_4
 		/*Assigning OSC freq code oscilator source*/
-		MY_SYSCTRL->RCC = (MY_SYSCTRL->RCC&(~0b11111<<6)) | (PIOSC_OSC_FRQ_CODE<<6);
+		MY_SYSCTRL->RCC = (MY_SYSCTRL->RCC&((uint32)~0x1F <<6)) | (PIOSC_OSC_FRQ_CODE<<6);
 	#elif     PRIM_CLK_SOURCE == MOSCDIS
 		/*The main oscillator enable*/
 		BIT_L(MY_SYSCTRL->RCC,0);
@@ -80,7 +79,7 @@ void SysCtrl_VoidInit(void)
 	
 	#if SYS_DIV == 1 && EN_PLL != ENABLE
 		/*Disable division*/
-		BIT_L(MY_SYSCTRL->RCC,22);
+		BIT_L(MY_SYSCTRL->RCC,(uint32)22);
 	#else
 		/*En division*/
 		BIT_H(MY_SYSCTRL->RCC,22);
@@ -106,18 +105,18 @@ void SysCtrl_VoidInit(void)
 		BIT_L(MY_SYSCTRL->RCC,19);	
 	#elif PWM_DIV == 8
 		/*enable pwm devision*/
-		BIT_H(MY_SYSCTRL->RCC,20);
+		BIT_H(MY_SYSCTRL->RCC,(uint32)20);
 		/*Assign devision factor*/
-		BIT_L(MY_SYSCTRL->RCC,17);
-		BIT_H(MY_SYSCTRL->RCC,18);
-		BIT_L(MY_SYSCTRL->RCC,19);
+		BIT_L(MY_SYSCTRL->RCC,(uint32)17);
+		BIT_H(MY_SYSCTRL->RCC,(uint32)18);
+		BIT_L(MY_SYSCTRL->RCC,(uint32)19);
 	#elif PWM_DIV == 16
 		/*enable pwm devision*/
 		BIT_H(MY_SYSCTRL->RCC,20);
 		/*Assign devision factor*/
-		BIT_H(MY_SYSCTRL->RCC,17);
-		BIT_H(MY_SYSCTRL->RCC,18);
-		BIT_L(MY_SYSCTRL->RCC,19);
+		BIT_H(MY_SYSCTRL->RCC,(uint32)17);
+		BIT_H(MY_SYSCTRL->RCC,(uint32)18);
+		BIT_L(MY_SYSCTRL->RCC,(uint32)19);
 	#elif PWM_DIV == 32
 		/*enable pwm devision*/
 		BIT_H(MY_SYSCTRL->RCC,20);
@@ -163,13 +162,13 @@ SysCtrl_RST_CAUSE_Type SysCtrl_GetRstCause(void)
 	/*Store the status flags*/
 	temp = MY_SYSCTRL->RESC & 0x3F;
 	/*Clear these flags*/
-	MY_SYSCTRL->RESC = MY_SYSCTRL->RESC & (~0x1003F);
+	MY_SYSCTRL->RESC = MY_SYSCTRL->RESC & (uint32)(~0x1003F);
 	return temp;
 }
  void SysCtrl_PowerUpPLL(void) 
  {
 	/*Powring up the PLL*/	
-	BIT_L(MY_SYSCTRL->RCC,13);
+	BIT_L(MY_SYSCTRL->RCC,(uint32)13);
  }
 
 

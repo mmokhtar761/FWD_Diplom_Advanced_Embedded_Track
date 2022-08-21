@@ -183,7 +183,6 @@ typedef struct
 #define MY_PE                         ((GPIO_PORT_RegType *)GPIO_PE_APB_BASE_ADDRESS)
 #define MY_PF                         ((GPIO_PORT_RegType *)GPIO_PF_APB_BASE_ADDRESS)
 
-
 /**********************************************************************************************************************
  *  GLOBAL DATA PROTOTYPES
  *********************************************************************************************************************/
